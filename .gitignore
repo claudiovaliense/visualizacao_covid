@@ -1,0 +1,4 @@
+dataset/
+__pycache__/
+.plotly/
+claudio_funcoes.py
