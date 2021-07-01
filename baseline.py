@@ -1,7 +1,9 @@
 #Author: Claudio Moises Valiense de Andrade. Licence: MIT. Objective: Visualizar dados do covid
-import claudio_funcoes_usage as cv
-import matplotlib.pyplot as plt
-import plotly.express as px
+import claudio_funcoes_usage as cv # function usage geral
+import matplotlib.pyplot as plt # plot static
+import plotly.express as px # plot dynamic
+import datetime # time
+import statistics # function statistics
 
 def read_data():
     """Read data"""
@@ -13,16 +15,35 @@ def read_data():
     tipos_vacina = cv.arquivo_para_corpus_delimiter(f'dataset/vacinaOpenDataSUS/vacina.csv', ';') # vacina_codigo 7
     
     vacinas_estado = dict()
-    for index in range(len(dados)):
+    for index in range(1,len(dados)):        
+        age = int( ( datetime.datetime.today() - datetime.datetime.strptime(dados[index][0], '%Y-%m-%d')).days / 365.25 )
         if vacinas_estado.get( dados[index][3] ) == None: 
-            vacinas_estado[ dados[index][3] ] = 0
-        vacinas_estado[ dados[index][3] ]+=1  # estado    
+            vacinas_estado[ dados[index][3] ] = {'qtd' : 0, 'age' : [] }
+        vacinas_estado[ dados[index][3] ] ['qtd'] +=1  # estado    
+        vacinas_estado[ dados[index][3] ] ['age'].append(age)  # idade    
     vacinas_estado = cv.remove_key_dict(vacinas_estado, 'XX'); vacinas_estado = cv.remove_key_dict(vacinas_estado, 'paciente_endereco_uf')    
+        
+    for k in vacinas_estado:
+        vacinas_estado[k]['age'] = statistics.mean( vacinas_estado[k]['age'] )
+        
     
+    #''' # vacina idade
+    fig = px.bar(x=vacinas_estado.keys(), y=[vacinas_estado[k]['age'] for k in vacinas_estado])    
+    fig.update_layout(xaxis_title='Estados', yaxis_title='Média da idade dos vacinados')
+    fig.show()    
+    fig.write_html("html/vacina_idade_estado.html")
+    #'''
+    
+    ''' # vacina estado
     fig = px.bar(x=vacinas_estado.keys(), y=vacinas_estado.values())    
     fig.update_layout(xaxis_title='Estados', yaxis_title='Quantidade de vacinas')
     fig.show()    
     fig.write_html("html/vacina_estado.html")
+    '''
+    
+    print( datetime.datetime.today() )
+    
+
 
 
 if __name__ == "__main__":
