@@ -87,42 +87,24 @@ class PopulationChart:
     def generate_bars(self, merged_df):
         men_complete, men, women_complete, women = PopulationChartDataset.extract_categories_array(merged_df)
 
-        return [go.Bar(y=self.y,
-                       x=men_complete,
-                       orientation='h',
-                       hoverinfo='x',
-                       text=men_complete,
-                       showlegend=True,
-                       name="Homens completamente imunizadas",
-                       marker=dict(color=self.dark_blue)
-                       ),
-                go.Bar(y=self.y,
-                       x=women_complete,
-                       orientation='h',
-                       text=-1 * women_complete,
-                       hoverinfo='text',
-                       showlegend=True,
-                       name="Mulheres completamente imunizadas",
-                       marker=dict(color=self.dark_pink)
-                       ),
-                go.Bar(y=self.y,
-                       x=men,
-                       orientation='h',
-                       name='Homens que receberam ao menos uma dose',
-                       text=men,
-                       hoverinfo='x',
-                       opacity=0.5,
-                       marker=dict(color=self.blue)
-                       ),
-                go.Bar(y=self.y,
-                       x=women,
-                       orientation='h',
-                       name='Mulheres que receberam ao menos uma dose',
-                       text=-1 * women.astype('int'),
-                       hoverinfo='text',
-                       opacity=0.5,
-                       marker=dict(color=self.pink)
-                       )]
+        return [self.generate_bar(men, "Homens que receberam ao menos uma dose", self.blue,
+                                  opacity=0.5),
+                self.generate_bar(women, "Mulheres que receberam ao menos uma dose", self.pink,
+                                  text=-1 * women, opacity=0.5),
+                self.generate_bar(men_complete, "Homens completamente imunizadas", self.dark_blue),
+                self.generate_bar(women_complete, "Mulheres completamente imunizadas", self.dark_pink,
+                                  text=-1 * women_complete)]
+
+    def generate_bar(self, x, legend_text, color, opacity=1.0, text=x):
+        return go.Bar(y=self.y,
+                      x=x,
+                      orientation='h',
+                      name=legend_text,
+                      text=text,
+                      hoverinfo='x',
+                      showlegend=True,
+                      marker=dict(color=color)
+                      )
 
     def merge(self, full_df, partial_df):
         return full_df.set_index("idade").join(partial_df.set_index("idade"), how="inner", lsuffix="complete",
