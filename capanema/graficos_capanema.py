@@ -9,6 +9,7 @@ import pandas as pd
 
 def grafico_total_vacinas_tipo_dose(app):
     df = pd.read_csv("total_dose.csv")
+    # a semana 25 é uma semana incompleta e por isso é retirada
     df = df[df['Semana de aplicação'] != 25]
     estados = ['Todos'] + df['Estado'].unique().tolist()
     opcoes = [{'label': i, 'value': i} for i in estados]
@@ -34,6 +35,7 @@ def grafico_total_vacinas_tipo_dose(app):
     def update_total_vacinas_tipo_dose(estado):
 
         df = pd.read_csv("total_dose.csv")
+        # a semana 25 é uma semana incompleta e por isso é retirada
         df = df[df['Semana de aplicação'] != 25]
         if estado != "Todos":
             df = df[df['Estado'] == estado]
@@ -104,6 +106,8 @@ def areas_empilhadas(app):
 
 def semana(l):
 
+    # isso é feito porque a função "dt.weekday" do pandas retorna a semana do ano em correspondente á respectiva data.
+    # Porém, a vacinação de fato começou na semana 3 de 2020. Mas para não ficar estranho, é necessário fazer um ajuste para a vacinação começar da semana 1
     convert = {1:7, 2:8, 3:9, 4:10, 5:11, 6:12, 7:13, 8:14, 9:15, 10:16, 11:17, 12:18, 13:19, 14:20, 15:21, 16:22, 17:23, 18:24, 19:25, 20:26, 21:27, 22:28, 23:29, 24:30, 33:1, 38:2, 40:3, 51:4, 52:5, 53:6}
 
     for i in range(len(l)):
