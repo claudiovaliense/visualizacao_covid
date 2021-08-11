@@ -18,6 +18,15 @@ def stacked_area(df, x_column, y_column, filename, category):
     df_total.columns = [x_column, 'a', 'Total dia (semana)']
 
     df_total = df_total[[x_column, 'Total dia (semana)']]
+    # unique_x_column = df_total[x_column].unique().tolist()
+    # pad_df = {x_column: [], 'Total dia (semana)': []}
+    # for i in range(len(unique_x_column)):
+    #     pad_df[x_column].append(unique_x_column[i])
+    #     pad_df['Total dia (semana)'].append(1)
+    #
+    # pad_df = pd.DataFrame(pad_df)
+    #
+    # df_total = pd.concat([df_total, pad_df], ignore_index=True)
 
     df = df.join(df_total.set_index(x_column), on=x_column)
     df['Total semana (%)'] = (df['Total (semana)'] / df['Total dia (semana)'])*100
