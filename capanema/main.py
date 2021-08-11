@@ -1,7 +1,7 @@
 import dash
 import dash_html_components as html
 
-from graficos_capanema import graficos_capanema
+from graficos_capanema import GraficosCapanema
 
 
 if __name__ == '__main__':
@@ -11,7 +11,7 @@ if __name__ == '__main__':
 
     components_html = [html.Div([html.H1("Visualizações sobre Covid-19"),
                                  html.H6("Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas o Brasil.")])]
-    components_html += graficos_capanema(app)
+    components_html += GraficosCapanema().start(app)
 
     app.layout = html.Div(components_html)
 

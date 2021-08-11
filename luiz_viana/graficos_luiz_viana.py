@@ -4,10 +4,10 @@ from dash.dependencies import Input, Output
 
 
 import pandas as pd
-from barras_fx_etaria import barras_fx_etaria, barras_sub_plot_vacina
+from .barras_fx_etaria import barras_fx_etaria, barras_sub_plot_vacina
 
 def grafico_total_vacinas_idade(app):
-    df = pd.read_csv("./data_set_consolidado_vacina.csv")
+    df = pd.read_csv("luiz_viana/data_set_consolidado_vacina.csv")
     df = df[df['paciente_endereco_uf'] != 'XX']
     
     estados = df['paciente_endereco_uf'].unique().tolist()
@@ -85,7 +85,7 @@ def grafico_total_vacinas_idade(app):
         Input('fx_etaria-filter', 'value'))
     def update_dataset_fx_etaria(estado, sexo, fx_etaria):
 
-        df = pd.read_csv("./data_set_consolidado_vacina.csv")
+        df = pd.read_csv("luiz_viana/data_set_consolidado_vacina.csv")
         df = df[df['paciente_endereco_uf'] != 'XX']
         r_min = 0
         r_max = df.groupby(['vacina_dataaplicacao'], 
@@ -131,7 +131,7 @@ def grafico_total_vacinas_idade(app):
     return component_html
 
 def grafico_sub_plot_vacinas_idade(app):
-    df = pd.read_csv("./data_set_consolidado_vacina.csv")
+    df = pd.read_csv("luiz_viana/data_set_consolidado_vacina.csv")
     df = df[df['paciente_endereco_uf'] != 'XX']
     
     estados = df['paciente_endereco_uf'].unique().tolist()
@@ -209,7 +209,7 @@ def grafico_sub_plot_vacinas_idade(app):
         Input('fx_etaria-filter', 'value'))
     def update_dataset_fx_etaria(estado, sexo, fx_etaria):
 
-        df = pd.read_csv("./data_set_consolidado_vacina.csv")
+        df = pd.read_csv("luiz_viana/data_set_consolidado_vacina.csv")
         df = df[df['paciente_endereco_uf'] != 'XX']
         r_min = 0
         r_max = df.groupby(['vacina_dataaplicacao'], 
