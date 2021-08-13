@@ -21,7 +21,7 @@ if __name__ == '__main__':
     components_html += graficos_luiz_viana(app)
 
     # capanema
-    #components_html += [html.H6("Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas o Brasil.")]
+    components_html += [html.H6("Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas o Brasil.")]
 
 
     components_html += GraficosCapanema().start(app)

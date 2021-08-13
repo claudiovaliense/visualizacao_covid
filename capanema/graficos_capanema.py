@@ -47,7 +47,7 @@ class GraficosCapanema:
 
         component_html = html.Div([
             html.Hr(),
-            html.H4('Porcentagem de aplicação por semana para cada tipo de vacina'),
+            html.H3('Porcentagem de aplicação por semana para cada tipo de vacina'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
@@ -93,7 +93,7 @@ class GraficosCapanema:
 
         component_html = html.Div([
             html.Hr(),
-            html.H4('Total acumulado de vacinas aplicadas a cada semana'),
+            html.H3('Total acumulado de vacinas aplicadas a cada semana'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(

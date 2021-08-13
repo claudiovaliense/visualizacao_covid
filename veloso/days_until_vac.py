@@ -97,7 +97,8 @@ class DaysUntilVac:
         for i, cat in zip(self.summary, self.sorted_df.set_index("categoria").index.unique()):
             self.fig.add_trace(go.Box(x=[""], name=cat, lowerfence=[i[0]], q1=[i[1]], median=[i[2]],
                                       q3=[i[3]], upperfence=[i[4]]))
-        self.fig.update_layout(height=650, width=1300, yaxis_title="Dias até vacinar", boxmode="group")
+        self.fig.update_layout(height=650, width=1300, yaxis_title="Dias até vacinar", boxmode="group", font=dict(
+            size=16))
         return self.fig
 
 

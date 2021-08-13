@@ -80,6 +80,8 @@ class PopulationChart:
                              range=range_,
                              tickvals=list(map(int, self.x)),
                              ticktext=[abs(int(t)) for t in self.x]),
+                         font=dict(
+                             size=16),
                          barmode='overlay',
                          bargap=0.1,
                          autosize=True,
