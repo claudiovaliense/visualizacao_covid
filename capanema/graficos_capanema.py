@@ -51,7 +51,7 @@ class GraficosCapanema:
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
-                    id='estado',
+                    id='estado-areas-empihadas',
                     options=opcoes,
                     value='Todos',
                 )
@@ -62,7 +62,7 @@ class GraficosCapanema:
 
         @app.callback(
             Output('areas-empilhadas', 'figure'),
-            Input('estado', 'value'))
+            Input('estado-areas-empihadas', 'value'))
         def update_areas_empilhadas(estado):
             df = pd.read_csv("capanema/areas_empilhadas.csv")
             df = df[df['Semana de aplicação'] != 25]
