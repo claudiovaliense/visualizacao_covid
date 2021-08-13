@@ -124,7 +124,7 @@ class PopulationChartDash(PopulationChart):
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
-                    id='estado',
+                    id='unidade_federativa',
                     options=options,
                     value='Todos',
                 ),
@@ -138,12 +138,12 @@ class PopulationChartDash(PopulationChart):
                 style={'width': '48%', 'display': 'inline-block'}),
             dcc.Graph(id='piramide-populacional')
         ])
-        cb_params = [Output('piramide-populacional', 'figure'), Input('estado', 'value'), Input('fixedscale', 'value')]
+        cb_params = [Output('piramide-populacional', 'figure'), Input('unidade_federativa', 'value'), Input('fixedscale', 'value')]
         app.callback(*cb_params)(self.callback)
 
     @staticmethod
-    def callback(estado: str, fixedscale: int):
+    def callback(unidade_federativa: str, fixedscale: int):
         pop = PopulationChart()
-        df = PopulationChartDataset.filter_by_uf(pop.vaccinated_df, estado)
+        df = PopulationChartDataset.filter_by_uf(pop.vaccinated_df, unidade_federativa)
         max_range = abs(max(df["M"].max(), df["F"].max()))
-        return pop.generate_figure(estado, x_range=(-max_range, max_range), fixed=fixedscale == 1)
+        return pop.generate_figure(unidade_federativa, x_range=(-max_range, max_range), fixed=fixedscale == 1)

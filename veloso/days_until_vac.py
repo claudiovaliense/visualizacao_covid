@@ -112,7 +112,7 @@ class DaysUntilVacDash(DaysUntilVac):
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
-                    id='estado',
+                    id='uf',
                     options=options,
                     value='Todos',
                 )
@@ -120,9 +120,9 @@ class DaysUntilVacDash(DaysUntilVac):
                 style={'width': '48%', 'display': 'inline-block'}),
             dcc.Graph(id='days-util-vac')
         ])
-        app.callback(Output('days-util-vac', 'figure'), Input('estado', 'value'))(self.callback)
+        app.callback(Output('days-util-vac', 'figure'), Input('uf', 'value'))(self.callback)
 
-    def callback(self, estado: str):
-        self.sorted_df = DaysUntilVacDataset.sort_by_mean(DaysUntilVacDataset.filter_by_uf(self.df, estado))
+    def callback(self, uf: str):
+        self.sorted_df = DaysUntilVacDataset.sort_by_mean(DaysUntilVacDataset.filter_by_uf(self.df, uf))
         self.summary = np.array(list(DaysUntilVacDataset.detect_quantiles(self.sorted_df).values()))
         return self.generate_figure()
