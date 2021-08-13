@@ -5,6 +5,8 @@ import os
 
 from capanema.graficos_capanema import GraficosCapanema
 from luiz_viana.graficos_luiz_viana import graficos_luiz_viana
+from veloso.days_until_vac import DaysUntilVacDash
+from veloso.population_chart import PopulationChartDash
 
 if __name__ == '__main__':
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -23,6 +25,11 @@ if __name__ == '__main__':
 
 
     components_html += GraficosCapanema().start(app)
+
+    # veloso
+    c1 = DaysUntilVacDash(app)
+    c2 = PopulationChartDash(app)
+    components_html += [c1.component_html, c2.component_html]
 
     app.layout = html.Div(components_html)
 

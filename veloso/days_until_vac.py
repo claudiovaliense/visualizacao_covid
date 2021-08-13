@@ -5,12 +5,14 @@ import pandas as pd
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
+import os
 
 
 class DaysUntilVacDataset:
     @staticmethod
     def load():
-        return pd.read_csv("tempo-desde-17-por-uf-categorizado-agrupado.csv")
+        dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
+        return pd.read_csv(dir_path + "tempo-desde-17-por-uf-categorizado-agrupado.csv")
 
     @staticmethod
     def filter_by_uf(df, uf):

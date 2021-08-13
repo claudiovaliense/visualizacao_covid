@@ -5,12 +5,13 @@ import pandas as pd
 import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
-
+import os
 
 class PopulationChartDataset:
     @staticmethod
     def load():
-        df = pd.read_csv("normalized-renamed-count-per-uf-sex-age.csv", index_col=[0, 1, 2, 3])
+        dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
+        df = pd.read_csv(dir_path + "normalized-renamed-count-per-uf-sex-age.csv", index_col=[0, 1, 2, 3])
         return df.unstack("sexo")["count"].drop("I", axis=1).reset_index().fillna(0)
 
     @staticmethod
