@@ -114,7 +114,12 @@ class DaysUntilVacDash(DaysUntilVac):
 
         self.component_html = html.Div([
             html.Hr(),
-            html.H4('População vacinada e imunizada por sexo e idade'),
+            html.H4('Distribuição da vacinação por grupos em dias desde o início da vacinação'),
+            html.H6('Nessa visualização utilizamos boxplots para representar a distribuição da vacinação por grupo' +
+                    ' ao longo do tempo. O tempo é medido em dias desde a data de início da vacinação no Brasil ' +
+                    '(17/01/2021) e quanto às interações suportadas temos a seleção de um subconjunto de grupos e ' +
+                    'filtragem por UF (unidade federativa). Além disso, os grupos estão representados por cores ' +
+                    'únicas e consistentes, o que facilita compará-los para uma ou mais UFs. '),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(

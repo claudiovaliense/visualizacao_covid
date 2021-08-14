@@ -123,7 +123,15 @@ class PopulationChartDash(PopulationChart):
 
         self.component_html = html.Div([
             html.Hr(),
-            html.H4('População vacinada e imunizada por sexo e idade'),
+            html.H4('Pirâmide etátia da vacinação'),
+            html.H6('Nessa visualização utilizamos uma representação inspirada na pirâmide etária (comumente usada em' +
+                    ' censos, como o IBGE) para representar o perfil do cidadão parcialmente ou totalmente imunizado ' +
+                    'contra a COVID-19. As barras, além de centralizadas, são agrupadas por genêro (mulheres são ' +
+                    'representadas pela cor rosa e homens pela cor azul) e estágio de vacinação do indivíduo (barras ' +
+                    'claras indicam o número de cidadãos que tomaram ao menos uma dose e barras escuras aqueles que ' +
+                    'estão completamente imunizados). Quanto às interações, é possível selecionar os grupos visíveis,' +
+                    ' filtrar dados com base na UF (unidade federativa) e determinar o tipo de escala a ser usado ' +
+                    '(fixa para comparar dimensões precisamente e dinâmica para comparar a forma da pirâmide).'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
