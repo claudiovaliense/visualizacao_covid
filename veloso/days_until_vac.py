@@ -6,13 +6,13 @@ import dash_html_components as html
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 class DaysUntilVacDataset:
     @staticmethod
     def load():
-        dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
-        return pd.read_csv(dir_path + "tempo-desde-17-por-uf-categorizado-agrupado.csv")
+        return pd.read_csv(os.path.join(dir_path, "tempo-desde-17-por-uf-categorizado-agrupado.csv"))
 
     @staticmethod
     def filter_by_uf(df, uf):
@@ -87,6 +87,8 @@ class DaysUntilVac:
         self.fig.show()
 
     def __init__(self, df=DaysUntilVacDataset.load(), uf="Todos"):
+        with open(os.path.join(dir_path, "cache-color.txt")) as f:
+            self.color_map = dict([line.rstrip().split(": ", maxsplit=1) for line in f.readlines()])
         self.df = df
         self.sorted_df = DaysUntilVacDataset.sort_by_mean(DaysUntilVacDataset.filter_by_uf(self.df, uf))
         self.summary = np.array(list(DaysUntilVacDataset.detect_quantiles(self.sorted_df).values()))
@@ -95,10 +97,11 @@ class DaysUntilVac:
     def generate_figure(self):
         self.fig = go.Figure()
         for i, cat in zip(self.summary, self.sorted_df.set_index("categoria").index.unique()):
+            color = self.color_map[cat]
             self.fig.add_trace(go.Box(x=[""], name=cat, lowerfence=[i[0]], q1=[i[1]], median=[i[2]],
-                                      q3=[i[3]], upperfence=[i[4]]))
-        self.fig.update_layout(height=650, width=1300, yaxis_title="Dias até vacinar", boxmode="group", font=dict(
-            size=16))
+                                      q3=[i[3]], upperfence=[i[4]], line=dict(color=color)))
+        self.fig.update_layout(height=650, width=1300, font=dict(size=16), yaxis_title="Dias até vacinar",
+                               boxmode="group")
         return self.fig
 
 

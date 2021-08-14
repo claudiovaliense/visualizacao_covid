@@ -1,25 +1,26 @@
-import dash
-import numpy as np
-import plotly.graph_objs as go
-import pandas as pd
-import dash_html_components as html
-import dash_core_components as dcc
-from dash.dependencies import Input, Output
 import os
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import numpy as np
+import pandas as pd
+import plotly.graph_objs as go
+from dash.dependencies import Input, Output
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 
 class PopulationChartDataset:
     @staticmethod
     def load():
-        dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
-        df = pd.read_csv(dir_path + "normalized-renamed-count-per-uf-sex-age.csv", index_col=[0, 1, 2, 3])
+        df = pd.read_csv(os.path.join(dir_path, "normalized-renamed-count-per-uf-sex-age.csv"), index_col=[0, 1, 2, 3])
         return df.unstack("sexo")["count"].drop("I", axis=1).reset_index().fillna(0)
 
     @staticmethod
     def extract_categories_array(merged_df):
-        women = merged_df["Fpartial"].apply(lambda c: -1 * c).to_numpy().astype(int)
-        men = merged_df["Mpartial"].to_numpy().astype(int)
-        women_at_least_a_dose = merged_df["Fcomplete"].apply(lambda c: -1 * c).to_numpy().astype(int)
-        men_at_least_a_dose = merged_df["Mcomplete"].to_numpy().astype(int)
+        women = merged_df["Fpartial"].to_numpy().astype(int)
+        men = merged_df["Mpartial"].apply(lambda c: -1 * c).to_numpy().astype(int)
+        women_at_least_a_dose = merged_df["Fcomplete"].to_numpy().astype(int)
+        men_at_least_a_dose = merged_df["Mcomplete"].apply(lambda c: -1 * c).to_numpy().astype(int)
         return men_at_least_a_dose, men, women_at_least_a_dose, women
 
     @staticmethod
@@ -40,10 +41,8 @@ class PopulationChartDataset:
 
 
 class PopulationChart:
-    blue = "rgb(0, 102, 255)"
-    dark_blue = "rgb(0, 102, 153)"
-    pink = "rgb(255, 0, 255)"
-    dark_pink = "rgb(155, 0, 155)"
+    blue = "dodgerblue"
+    pink = "rgb(255, 182, 193)"
     y = list(range(0, 221, 1))
     x = np.arange(-1000000, 1000001, 20000)
     fig: go.Figure
@@ -61,51 +60,52 @@ class PopulationChart:
         self.generate_figure()
 
     def generate_figure(self, category="Todos", x_range=None, fixed=True):
+        if fixed is True:
+            x_range = (-1000000, 1000000)
         if isinstance(x_range, tuple):
             step = (abs(x_range[1]) + abs(x_range[0])) / 10
-            self.x = np.arange(x_range[0], x_range[1], step)
+            self.x = np.around(np.arange(x_range[0], x_range[1] + 1, step))
         vaccinated_aggregated_df = PopulationChartDataset.filter_by_uf(self.vaccinated_df, category)
         complete_aggregated_df = PopulationChartDataset.filter_by_uf(self.complete_df, category)
         self.fig = go.Figure(data=self.generate_bars(self.merge(complete_aggregated_df, vaccinated_aggregated_df)),
-                             layout=self.generate_layout(fixed=fixed))
+                             layout=self.generate_layout())
+        self.fig.update_layout(height=960, font=dict(size=16))
         return self.fig
 
-    def generate_layout(self, fixed=True):
-        if fixed:
-            range_ = [-1000000, 1000000]
-        else:
-            range_ = [self.x[0], self.x[-1]]
+    def generate_layout(self):
         return go.Layout(yaxis=go.layout.YAxis(title='Idade (em anos)'),
                          xaxis=go.layout.XAxis(
-                             range=range_,
-                             tickvals=list(map(int, self.x)),
-                             ticktext=[abs(int(t)) for t in self.x]),
+                             range=[self.x[0], self.x[-1]],
+                             tickvals=[t for t in self.x],
+                             ticktext=[abs(t) for t in self.x]),
                          font=dict(
                              size=16),
                          barmode='overlay',
                          bargap=0.1,
-                         autosize=True,
-                         height=960)
+                         autosize=True)
 
     def generate_bars(self, merged_df):
         men_complete, men, women_complete, women = PopulationChartDataset.extract_categories_array(merged_df)
 
-        return [self.generate_bar(men, "Homens que receberam ao menos uma dose", self.blue,
+        return [self.generate_bar(women, "Mulheres que receberam ao menos uma dose", self.pink,
                                   opacity=0.5),
-                self.generate_bar(women, "Mulheres que receberam ao menos uma dose", self.pink,
-                                  text=-1 * women, opacity=0.5),
-                self.generate_bar(men_complete, "Homens completamente imunizadas", self.dark_blue),
-                self.generate_bar(women_complete, "Mulheres completamente imunizadas", self.dark_pink,
-                                  text=-1 * women_complete)]
+                self.generate_bar(men, "Homens que receberam ao menos uma dose", self.blue,
+                                  text=-1 * men, opacity=0.5),
+                self.generate_bar(women_complete, "Mulheres completamente imunizadas", self.pink),
+                self.generate_bar(men_complete, "Homens completamente imunizadas", self.blue,
+                                  text=-1 * men_complete)]
 
-    def generate_bar(self, x, legend_text, color, opacity=1.0, text=x):
+    def generate_bar(self, x, legend_text, color, opacity=1.0, text=None):
+        text = x if text is None else text
         return go.Bar(y=self.y,
                       x=x,
                       orientation='h',
                       name=legend_text,
                       text=text,
-                      hoverinfo='x',
+                      hovertext=text.astype(str),
+                      hoverinfo='text',
                       showlegend=True,
+                      opacity=opacity,
                       marker=dict(color=color)
                       )
 
