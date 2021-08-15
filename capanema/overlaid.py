@@ -29,7 +29,7 @@ def overlaid_area(df, x_column, y_column, filename, category):
         xaxis_title="Semana - início em 17/01/2021 até 20/06/2021",
         yaxis_title="Total de vacinas aplicadas",
         font=dict(
-            size=25))
+            size=16))
 
     return fig
 

@@ -19,7 +19,9 @@ def barras_fx_etaria(df, r_min, r_max):
         yanchor="bottom",
         y=1.02,
         xanchor="right",
-        x=1
+        x=1,
+        font=dict(
+            size=16)
     ))
     
     fig.update_yaxes(
@@ -124,7 +126,10 @@ def barras_sub_plot_vacina(df, r_min, r_max):
         fig.append_trace(traces, row=3, col=1)     
         
     fig.update_layout(height=550, 
-                      margin=dict(t=50))
+                      margin=dict(t=50),
+                      font=dict(
+                          size=16)
+                      )
     #, margin=dict(l=0.1,r=0.1,b=0,t=50)
     fig.update_xaxes(title_text="Data de Aplicação", row=3, col=1)
     fig.update_yaxes(range=[r_min, r_max])
