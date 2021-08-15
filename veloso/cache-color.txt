@@ -1,0 +1,19 @@
+Povos Indígenas: black
+Pessoas de 80 anos ou mais: blue
+Trabalhadores de Saúde: blueviolet
+Pessoas de 60 anos ou mais institucionalizadas: brown
+Pessoas de 75 a 79 anos: burlywood
+Pessoas de 70 a 74 anos: cadetblue
+Pessoas de 65 a 69 anos: chartreuse
+Povos e Comunidades Tradicionais: chocolate
+Forças Armadas e Segurança: coral
+Funcionário do Sistema de Privação de Liberdade: cornflowerblue
+Pessoas em Situação de Rua: crimson
+Pessoas com Deficiência: cyan
+Pessoas de 18 a 64 anos: darkblue
+Comorbidades: darkcyan
+Trabalhadores da Educação: darkgoldenrod
+Trabalhadores Portuários: darkgray
+Trabalhadores de Transporte: darkgreen
+População Privada de Liberdade: darkkhaki
+Trabalhadores Industriais: darkmagenta
