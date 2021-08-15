@@ -14,6 +14,8 @@ if __name__ == '__main__':
 
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
+    server = app.server
+
     components_html = []
     # # luiz viana
     components_html += [html.Div([html.H1("Visualizações sobre Covid-19 - Vacinação"),
