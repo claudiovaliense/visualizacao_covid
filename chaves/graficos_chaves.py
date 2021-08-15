@@ -4,11 +4,13 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import pandas as pd
+import os
 
 class GraficoChaves:
-    
+
     def comparativo_casos(self, app):
-        df = pd.read_csv("casos.csv")
+        dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
+        df = pd.read_csv(dir_path + "casos.csv")
         estados = ['Todos'] + [e.upper() for e in pd.unique(df['Estado'])]
         opcoes = [{'label': e, 'value': e} for e in estados]
         
@@ -48,7 +50,8 @@ class GraficoChaves:
         )
         
         def update_piramide1(estado):
-            df = pd.read_csv("casos.csv")
+            dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
+            df = pd.read_csv(dir_path + "casos.csv")
             if estado == 'Todos':
                 e = 'br'
             else:
@@ -78,7 +81,8 @@ class GraficoChaves:
         )
         
         def update_piramide2(estado):
-            df = pd.read_csv("casos.csv")
+            dir_path = os.path.dirname(os.path.realpath(__file__)) + "/"
+            df = pd.read_csv(dir_path + "casos.csv")
             if estado == 'Todos':
                 e = 'br'
             else:

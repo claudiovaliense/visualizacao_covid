@@ -7,6 +7,7 @@ from capanema.graficos_capanema import GraficosCapanema
 from luiz_viana.graficos_luiz_viana import graficos_luiz_viana
 from veloso.days_until_vac import DaysUntilVacDash
 from veloso.population_chart import PopulationChartDash
+from chaves.graficos_chaves import GraficoChaves
 
 if __name__ == '__main__':
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -30,6 +31,9 @@ if __name__ == '__main__':
     c1 = DaysUntilVacDash(app)
     c2 = PopulationChartDash(app)
     components_html += [c1.component_html, c2.component_html]
+
+    # chaves
+    components_html += GraficoChaves().comparativo_casos(app)
 
     app.layout = html.Div(components_html)
 
