@@ -108,7 +108,7 @@ def barras_sub_plot_vacina(df, r_min, r_max):
                         "Total"
                         ),
         horizontal_spacing = 0.05,
-        vertical_spacing=0.1)        
+        vertical_spacing=0.15)        
 
     for traces in fig1_traces:
         fig.append_trace(traces, row=1, col=1)
@@ -132,6 +132,8 @@ def barras_sub_plot_vacina(df, r_min, r_max):
                       )
     #, margin=dict(l=0.1,r=0.1,b=0,t=50)
     fig.update_xaxes(title_text="Data de Aplicação", row=3, col=1)
+    fig.update_xaxes(range=['2021-01-10','2021-06-30'])
+    
     fig.update_yaxes(range=[r_min, r_max])
     fig.update_yaxes(title_text="Doses Aplicadas", row=3, col=1)
     fig.update_layout(coloraxis=dict(cmin=0, cmax=100))

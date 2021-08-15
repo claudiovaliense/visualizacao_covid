@@ -1,7 +1,7 @@
 import dash
 import dash_html_components as html
 #import dash_bootstrap_components as dbc
-import os
+
 
 from capanema.graficos_capanema import GraficosCapanema
 from luiz_viana.graficos_luiz_viana import graficos_luiz_viana
@@ -10,8 +10,9 @@ from veloso.population_chart import PopulationChartDash
 
 if __name__ == '__main__':
     external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
-    app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+    
+    app = dash.Dash(__name__, external_stylesheets=external_stylesheets)        
+    server = app.server
 
     components_html = []
     # # luiz viana
