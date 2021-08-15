@@ -48,6 +48,7 @@ class GraficosCapanema:
         component_html = html.Div([
             html.Hr(),
             html.H4('Porcentagem de aplicação por semana para cada tipo de vacina'),
+            html.H6('Esta visualização exibe a porcentagem semanal de aplicações de cada marca de vacina. Durante a maior parte das semanas, a vacina da Coronavac foi predominante. No entanto, ao longo do tempo a Coronavac tem perdido espaço para a Astrazeneca.'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(

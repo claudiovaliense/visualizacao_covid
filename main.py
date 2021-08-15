@@ -15,25 +15,31 @@ if __name__ == '__main__':
     app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
     components_html = []
-    # # luiz viana
+
     components_html += [html.Div([html.H1("Visualizações sobre Covid-19 - Vacinação"),
-                                 html.H6(
-                                     "Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas o Brasil.")])]
-    components_html += graficos_luiz_viana(app)
-
-    # capanema
-    components_html += [html.H6("Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas o Brasil.")]
-
-
-    components_html += GraficosCapanema().start(app)
-
-    # veloso
-    c1 = DaysUntilVacDash(app)
-    c2 = PopulationChartDash(app)
-    components_html += [c1.component_html, c2.component_html]
+                                  html.H6(
+                                      "Neste trabalho, são apresentadas visualizações sobre os casos de Covid-19 e as vacinas aplicadas no Brasil.")])]
 
     # chaves
     components_html += GraficoChaves().comparativo_casos(app)
+
+    # veloso - pirâmide
+    c1 = DaysUntilVacDash(app)
+    c2 = PopulationChartDash(app)
+    components_html += [c2.component_html]
+
+    # # luiz viana
+    components_html += graficos_luiz_viana(app)
+
+    # veloso - boxplot
+    components_html += [c1.component_html]
+
+    # capanema
+    components_html += GraficosCapanema().start(app)
+
+
+
+
 
     app.layout = html.Div(components_html)
 
