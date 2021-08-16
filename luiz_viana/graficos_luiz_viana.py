@@ -27,7 +27,8 @@ def grafico_total_vacinas_idade(app):
     
     component_html = html.Div([
             html.Hr(),
-            html.H4('Vacinas aplicadas por dia e faixa etária'),
+            html.H4('Vacinas Aplicadas por dia de acordo com a Faixa Etária'),
+            html.H6('teste'),
             html.Label("Filtros"),
             html.Div(
             [   
@@ -151,7 +152,11 @@ def grafico_sub_plot_vacinas_idade(app):
     
     component_html = html.Div([
             html.Hr(),
-            html.H4('Vacinas aplicadas por dia e faixa etária'),
+            html.H4('Vacinas Aplicadas por dia de acordo com a Faixa Etária'),
+            html.H6('Nesta visualização são exibidos cinco gráficos '+
+                    'onde podemos verificar ao longo de todo o período qual '+
+                    'vacina foi predominantemente aplicada ' +
+                    'por faixa etária.'),
             html.Label("Filtros"),
             html.Div(
             [   

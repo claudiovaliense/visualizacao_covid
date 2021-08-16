@@ -26,13 +26,8 @@ def semana(l):
 class GraficosCapanema:
 
     def start(self, app):
-        components_html = []
 
-        components_html.append(self.areas_empilhadas(app))
-
-        components_html.append(self.grafico_total_vacinas_tipo_dose(app))
-
-        return components_html
+        return [[self.areas_empilhadas(app)], [self.grafico_total_vacinas_tipo_dose(app)]]
 
     def areas_empilhadas(self, app):
 
@@ -48,6 +43,7 @@ class GraficosCapanema:
         component_html = html.Div([
             html.Hr(),
             html.H4('Porcentagem de aplicação por semana para cada tipo de vacina'),
+            html.H6('Esta visualização exibe a porcentagem semanal de aplicações de cada marca de vacina. Durante a maior parte das semanas, a vacina da Coronavac foi predominante. No entanto, ao longo do tempo a Coronavac tem perdido espaço para a Astrazeneca.'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
