@@ -151,7 +151,8 @@ def grafico_sub_plot_vacinas_idade(app):
     
     component_html = html.Div([
             html.Hr(),
-            html.H4('Vacinas aplicadas por dia e faixa etária'),
+            html.H4('Vacinas aplicadas por dia de acordo com a faixa etária'),
+            html.H6('Visualização de dados vacinais diários por tipo de vacina e faixa etária da poppulação.'),
             html.Label("Filtros"),
             html.Div(
             [   
