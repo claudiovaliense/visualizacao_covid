@@ -33,31 +33,66 @@ def read_data():
     vacinas_estado = cv.remove_key_dict(vacinas_estado, 'XX'); vacinas_estado = cv.remove_key_dict(vacinas_estado, 'paciente_endereco_uf')    
     for k in vacinas_estado:        
         vacinas_estado[k]['age_media'] = statistics.mean( vacinas_estado[k]['age'] )  
+        vacinas_estado[k]['age_median'] = statistics.median( vacinas_estado[k]['age'] )  
         vacinas_estado[k]['age_histogram'] = numpy.histogram(vacinas_estado[k]['age'], bins=10) 
     
-    dados = {'sigla': list(vacinas_estado.keys()), 'age_media' : [vacinas_estado[k]['age_media'] for k in vacinas_estado], 'age_histogram' : [vacinas_estado[k]['age_histogram'] for k in vacinas_estado]}
-    dados = pd.DataFrame(dados  )
-    
+    dados = {'sigla': list(vacinas_estado.keys()), 'média idade' : [vacinas_estado[k]['age_media'] for k in vacinas_estado],
+        'mediana idade' : [vacinas_estado[k]['age_median'] for k in vacinas_estado],
+        'age_histogram' : [vacinas_estado[k]['age_histogram'] for k in vacinas_estado]}
+    dados = pd.DataFrame(dados  )    
     brasil = json.load(open( 'dataset/mapa_brasil'))
     
-    #print(brasil)
+    nomes = []
+    sigla_nome = {}
     for feature in brasil['features']:                
         feature['id'] = feature['properties']['sigla']    
+        #nomes.append( feature['properties']['name'] )
+        sigla_nome [ feature['properties']['sigla'] ]  =  feature['properties']['name'] 
     
-    fig = px.choropleth(dados,
+    nomes_ordem = []    
+    for d in dados['sigla']:
+        #print(d)
+        nomes_ordem.append(sigla_nome[d])
+    dados['Nome'] = nomes_ordem
+    
+    #nomes_estados = ['Acre','Alagoas','Amazonas','Amapá','Bahia','Ceará','Espírito Santo','Goiás','Maranhão','Minas Gerais','Mato Grosso do Sul','Mato Grosso','Pará','Paraíba','Pernambuco','Piauí' ,'Paraná','Rio de Janeiro','Rio Grande do Norte','Rondônia','Roraima','Rio Grande do Sul','Santa Catarina', 'Sergipe', 'São Paulo', 'Tocantins', 'Distrito Federal']
+        
+    #dados['nomes'] = nomes
+    #print(dados)
+    
+    #print(dados['nomes'])
+    #print(dados['sigla'])
+    
+    fig = px.choropleth(
+        dados,
         locations='sigla',
         geojson = brasil,
-        color='age_media',
-        #hover_data=['age_histogram'],
+        color='média idade',
+        hover_data=['Nome', 'mediana idade'],
         scope='south america'
     )    
     #fig.show()
         
     #fig = px.bar(x=list(vacinas_estado.keys()), y=[vacinas_estado[k]['qtd'] for k in vacinas_estado]) 
     #fig.update_layout(xaxis_title='Estados', yaxis_title='Quantidade de vacinas')
+    
     #fig.show()    
-    fig.write_html("html/mapa.html")
+    #fig.write_html("html/mapa.html")
+    
+    #return fig
+    
+    import dash
+    import dash_core_components as dcc
+    import dash_html_components as html
+    
+    app = dash.Dash()
+    app.layout = html.Div([
+        dcc.Graph(figure=fig)
+    ])
+    
 
+
+    app.run_server(debug=True, use_reloader=False)  # Turn off reloader if inside Jupyter
 
 if __name__ == "__main__":
     #with urlopen('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson') as response:
