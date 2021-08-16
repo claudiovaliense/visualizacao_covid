@@ -1,2 +1,5 @@
-# visualizacao_covid
-Visualização de dados do COVID
+# Visualização
+
+Visualização de dados da COVID-19 no Brasil.
+
+[Website](https://visualizacao.herokuapp.com)

@@ -47,7 +47,8 @@ class GraficosCapanema:
 
         component_html = html.Div([
             html.Hr(),
-            html.H3('Porcentagem de aplicação por semana para cada tipo de vacina'),
+            html.H4('Porcentagem de aplicação por semana para cada tipo de vacina'),
+            html.H6('Esta visualização exibe a porcentagem semanal de aplicações de cada marca de vacina. Durante a maior parte das semanas, a vacina da Coronavac foi predominante. No entanto, ao longo do tempo a Coronavac tem perdido espaço para a Astrazeneca.'),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(
@@ -93,7 +94,8 @@ class GraficosCapanema:
 
         component_html = html.Div([
             html.Hr(),
-            html.H3('Total acumulado de vacinas aplicadas a cada semana'),
+            html.H4('Total acumulado de vacinas aplicadas a cada semana'),
+            html.H6("Esta visualização exibe o total acumulado de aplicações da primeira dose (azul claro) e vacinação completa que inclui a segunda dose ou dose única (azul escuro). É possível observar que apartir da semana 19 a curva da primeira dose se distância da curva da vacinação completa. Neste período, a maior parte das vacinas aplicadas era da Astrazeneca, que exibe um período maior entre a primeira e segunda doses."),
             html.Label("Selecione o estado"),
             html.Div([
                 dcc.Dropdown(

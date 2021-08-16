@@ -1,8 +1,6 @@
-dataset/
-__pycache__/
-.plotly/
-claudio_funcoes.py
 venv
 *.pyc
 .DS_Store
 .env
+claudio_funcoes.py
+dataset/
