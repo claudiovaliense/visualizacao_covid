@@ -29,14 +29,23 @@ if __name__ == '__main__':
     c2 = PopulationChartDash(app)
     components_html += [c2.component_html]
 
-    # # luiz viana
-    components_html += graficos_luiz_viana(app)
+    # capanema
+    areas_empilhadas, total_vacinas = GraficosCapanema().start(app)
+
+    components_html += total_vacinas
 
     # veloso - boxplot
     components_html += [c1.component_html]
 
-    # capanema
-    components_html += GraficosCapanema().start(app)
+    # capanema - areas empilhadas
+    components_html += areas_empilhadas
+
+    # # luiz viana
+    components_html += graficos_luiz_viana(app)
+
+
+
+
 
 
 

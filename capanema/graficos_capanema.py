@@ -26,13 +26,8 @@ def semana(l):
 class GraficosCapanema:
 
     def start(self, app):
-        components_html = []
 
-        components_html.append(self.areas_empilhadas(app))
-
-        components_html.append(self.grafico_total_vacinas_tipo_dose(app))
-
-        return components_html
+        return [[self.areas_empilhadas(app)], [self.grafico_total_vacinas_tipo_dose(app)]]
 
     def areas_empilhadas(self, app):
 
