@@ -41,7 +41,7 @@ def grafico_total_vacinas_idade(app):
                     html.Div(
                     [
                     dcc.Checklist(
-                        id='sexo-filter',
+                        id='sexo-filter2',
                         options=opcoes_sexo,
                         value=['M','F'],
                         labelStyle={'display': 'inline-block'}
